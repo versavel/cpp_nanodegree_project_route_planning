@@ -1,6 +1,8 @@
-# Route Planning Project
+# OpenStreetMap Route Planning Project
 
-This repo contains the starter code for the Route Planning project.
+This repo contains my code for the OpenStreetMap Route Planning project for the Udacity C++ Nanodegree Program.
+
+Starter code, as well as all the content below, was provided by Udacity.
 
 <img src="map.png" width="600" height="450" />
 
