@@ -1,33 +1,49 @@
-#ifndef ROUTE_PLANNER_H
-#define ROUTE_PLANNER_H
+#pragma once
 
 #include <iostream>
 #include <vector>
 #include <string>
 #include "route_model.h"
 
+//==========================================================
+// RoutePlanner Class
+// --> Implements the A* Search Algorithm
+//==========================================================
 
 class RoutePlanner {
   public:
+    // RoutePlanner class constructor
     RoutePlanner(RouteModel &model, float start_x, float start_y, float end_x, float end_y);
-    // Add public variables or methods declarations here.
-    float GetDistance() const {return distance;}
+
+    //Get found solution distance
+    float GetDistance() const { return distance; }
+
+    // Search path from start_node to end_node
     void AStarSearch();
 
-    // The following methods have been made public so we can test them individually.
-    void AddNeighbors(RouteModel::Node *current_node);
-    float CalculateHValue(RouteModel::Node const *node);
+    //Rebuild path from last Node, from parent to parent until reaching start node
     std::vector<RouteModel::Node> ConstructFinalPath(RouteModel::Node *);
-    RouteModel::Node *NextNode();
+
+    // Calculate the h-value for a given node
+    float CalculateHValue(RouteModel::Node *);
+
+    // Add new nodes to the search
+    void AddNeighbors(RouteModel::Node *);
 
   private:
-    // Add private variables or methods declarations here.
-    std::vector<RouteModel::Node*> open_list;
-    RouteModel::Node *start_node;
-    RouteModel::Node *end_node;
+    // OSM model augmented to performed A*
+    RouteModel & m_Model;
 
-    float distance = 0.0f;
-    RouteModel &m_Model;
+    //Start and end Nodes of the search
+    RouteModel::Node *start_node, *end_node;
+
+    //Found route distance
+    float distance;
+
+    // the list of open nodes in the A* search
+    std::vector<RouteModel::Node *> open_list;
+
+    // Return the node with the lowest f-value,
+    // and remove the node from the list of open nodes
+    RouteModel::Node *NextNode();
 };
-
-#endif
